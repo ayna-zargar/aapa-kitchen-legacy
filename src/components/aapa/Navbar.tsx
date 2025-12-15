@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { ShoppingBag, Menu, X } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
-import { cn } from '@/lib/utils';
+import { useState, useEffect } from "react";
+import { ShoppingBag, Menu, X } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { cn } from "@/lib/utils";
+import Logo from "../../../public/Logo.png";
 
 const Navbar = () => {
   const { totalItems, setIsOpen } = useCart();
@@ -12,37 +13,42 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { label: 'Home', href: '#hero' },
-    { label: 'Our Story', href: '#story' },
-    { label: 'Products', href: '#products' },
-    { label: 'Reviews', href: '#reviews' },
+    { label: "Home", href: "#hero" },
+    { label: "Our Story", href: "#story" },
+    { label: "Products", href: "#products" },
+    { label: "Reviews", href: "#reviews" },
   ];
 
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
         isScrolled
-          ? 'bg-background/95 backdrop-blur-md border-b border-border/50 py-4'
-          : 'bg-transparent py-6'
+          ? "bg-background/95 backdrop-blur-md border-b border-border/50 h-24"
+          : "bg-transparent h-24"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between h-full">
         {/* Logo */}
         <a href="#hero" className="flex items-center gap-3">
-          <span className="font-serif text-2xl md:text-3xl font-medium text-foreground">
+          <img
+            src={Logo}
+            alt="Aapa Foods Logo"
+            className="h-10 w-10 md:h-44 md:w-80 object-contain top-5"
+          />
+          <span className="font-serif text-2xl md:text-3xl font-medium text-foreground ml-[-180px]">
             The <span className="text-primary">Aapa</span> Foods
           </span>
         </a>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-10">
-          {navLinks.map(link => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -86,7 +92,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-lg border-b border-border animate-fade-in">
           <div className="px-6 py-6 flex flex-col gap-4">
-            {navLinks.map(link => (
+            {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}

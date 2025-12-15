@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -8,14 +8,17 @@ const Hero = () => {
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background to-charcoal-light" />
-      
+
       {/* Decorative elements */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-olive/5 rounded-full blur-3xl" />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         {/* Pre-launch badge */}
-        <div className="inline-flex items-center gap-2 mb-8 opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+        <div
+          className="inline-flex items-center gap-2 mb-32 opacity-0 animate-fade-in"
+          style={{ animationDelay: "0.2s" }}
+        >
           <span className="badge-premium">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             Pre-Launch 2025
@@ -23,9 +26,9 @@ const Hero = () => {
         </div>
 
         {/* Main headline */}
-        <h1 
+        <h1
           className="text-display text-foreground mb-6 opacity-0 animate-fade-in"
-          style={{ animationDelay: '0.4s' }}
+          style={{ animationDelay: "0.4s" }}
         >
           Tradition, Crafted
           <br />
@@ -33,25 +36,25 @@ const Hero = () => {
         </h1>
 
         {/* Subheadline */}
-        <p 
+        <p
           className="text-subheadline max-w-2xl mx-auto mb-4 opacity-0 animate-fade-in"
-          style={{ animationDelay: '0.6s' }}
+          style={{ animationDelay: "0.6s" }}
         >
           Celebrating 60+ years of Aapa's anchaar-making legacy
         </p>
 
-        <p 
+        <p
           className="text-body max-w-xl mx-auto mb-12 opacity-0 animate-fade-in"
-          style={{ animationDelay: '0.8s' }}
+          style={{ animationDelay: "0.8s" }}
         >
-          Small-batch, handmade Kashmiri pickles crafted with love, 
-          heritage recipes, and absolutely no preservatives.
+          Small-batch, handmade Kashmiri pickles crafted with love, heritage
+          recipes, and absolutely no preservatives.
         </p>
 
         {/* CTAs */}
-        <div 
+        <div
           className="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-fade-in"
-          style={{ animationDelay: '1s' }}
+          style={{ animationDelay: "1s" }}
         >
           <a href="#products" className="btn-primary">
             Shop Anchaar
@@ -66,7 +69,7 @@ const Hero = () => {
       <a
         href="#story"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors opacity-0 animate-fade-in"
-        style={{ animationDelay: '1.4s' }}
+        style={{ animationDelay: "1.4s" }}
       >
         <span className="text-xs tracking-widest uppercase">Scroll</span>
         <ChevronDown className="w-5 h-5 animate-bounce" />

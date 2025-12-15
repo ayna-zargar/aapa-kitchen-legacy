@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 export interface Product {
   id: string;
@@ -9,6 +15,7 @@ export interface Product {
   image: string;
   ingredients: string[];
   tastingNotes: string;
+  inStock: boolean;
 }
 
 export interface CartItem {
@@ -25,41 +32,46 @@ interface CartContextType {
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
-  totalPrice: number;
-  getWhatsAppLink: () => string;
+  subtotal: number;
+  hasOutOfStockItems: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = 'aapa-foods-cart';
-const WHATSAPP_NUMBER = '919999999999'; // Replace with actual number
-
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
-
-  // Load cart from localStorage on mount
-  useEffect(() => {
-    const savedCart = localStorage.getItem(CART_STORAGE_KEY);
-    if (savedCart) {
+  // Initialize state from localStorage (or empty array if not available)
+  const [items, setItems] = useState<CartItem[]>(() => {
+    // This will work in your actual app, but not in Claude artifacts
+    if (typeof window !== "undefined") {
       try {
-        setItems(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Failed to parse cart from localStorage');
+        const savedCart = localStorage.getItem("aapafoods-cart");
+        return savedCart ? JSON.parse(savedCart) : [];
+      } catch (error) {
+        console.error("Error loading cart from localStorage:", error);
+        return [];
       }
     }
-  }, []);
+    return [];
+  });
+
+  const [isOpen, setIsOpen] = useState(false);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("aapafoods-cart", JSON.stringify(items));
+      } catch (error) {
+        console.error("Error saving cart to localStorage:", error);
+      }
+    }
   }, [items]);
 
   const addToCart = (product: Product, quantity = 1) => {
-    setItems(prev => {
-      const existingItem = prev.find(item => item.product.id === product.id);
+    setItems((prev) => {
+      const existingItem = prev.find((item) => item.product.id === product.id);
       if (existingItem) {
-        return prev.map(item =>
+        return prev.map((item) =>
           item.product.id === product.id
             ? { ...item, quantity: item.quantity + quantity }
             : item
@@ -71,7 +83,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeFromCart = (productId: string) => {
-    setItems(prev => prev.filter(item => item.product.id !== productId));
+    setItems((prev) => prev.filter((item) => item.product.id !== productId));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
@@ -79,8 +91,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       removeFromCart(productId);
       return;
     }
-    setItems(prev =>
-      prev.map(item =>
+    setItems((prev) =>
+      prev.map((item) =>
         item.product.id === productId ? { ...item, quantity } : item
       )
     );
@@ -91,22 +103,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce(
+  const subtotal = items.reduce(
     (sum, item) => sum + item.product.price * item.quantity,
     0
   );
 
-  const getWhatsAppLink = () => {
-    if (items.length === 0) return '';
-
-    const orderDetails = items
-      .map(item => `${item.quantity}x ${item.product.name} (₹${item.product.price * item.quantity})`)
-      .join('\n');
-
-    const message = `Hello! I'd like to place an order:\n\n${orderDetails}\n\n*Total: ₹${totalPrice}*\n\nPlease confirm availability and share payment details.`;
-
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  };
+  const hasOutOfStockItems = items.some((item) => !item.product.inStock);
 
   return (
     <CartContext.Provider
@@ -119,8 +121,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         updateQuantity,
         clearCart,
         totalItems,
-        totalPrice,
-        getWhatsAppLink,
+        subtotal,
+        hasOutOfStockItems,
       }}
     >
       {children}
@@ -131,7 +133,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };

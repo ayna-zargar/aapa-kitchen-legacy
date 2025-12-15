@@ -1,16 +1,16 @@
-import { useEffect, useRef } from 'react';
-
+import { useEffect, useRef } from "react";
+import Heritage from "../../../public/Heritage.jpeg";
 const OurStory = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
+      (entries) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.fade-up').forEach((el, i) => {
+            entry.target.querySelectorAll(".fade-up").forEach((el, i) => {
               setTimeout(() => {
-                el.classList.add('visible');
+                el.classList.add("visible");
               }, i * 150);
             });
           }
@@ -41,7 +41,7 @@ const OurStory = () => {
           <div className="fade-up relative">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden bg-muted relative">
               <img
-                src="/placeholder.svg"
+                src={Heritage}
                 alt="Aapa - The heart of our tradition"
                 className="w-full h-full object-cover"
               />
@@ -73,22 +73,25 @@ const OurStory = () => {
 
             <div className="space-y-6 text-body">
               <p className="fade-up">
-                In a quiet kitchen in Kashmir, our beloved <strong className="text-foreground">Aapa</strong> — 
-                grandmother to our founder Saadath — has been crafting pickles for over six decades. 
-                Her hands carry the recipes of generations, each jar a testament to patience, love, 
-                and the flavors of our homeland.
+                In a quiet kitchen in Kashmir, our beloved{" "}
+                <strong className="text-foreground">Aapa</strong> — grandmother
+                to our founder Saadath — has been crafting pickles for over six
+                decades. Her hands carry the recipes of generations, each jar a
+                testament to patience, love, and the flavors of our homeland.
               </p>
 
               <p className="fade-up">
-                When <em>The Aapa Podcast</em> shared her stories on Instagram, the world 
-                fell in love with her warmth and wisdom. Messages poured in — people longing 
-                for a taste of authentic Kashmiri heritage.
+                When <em>The Aapa Podcast</em> shared her stories on Instagram,
+                the world fell in love with her warmth and wisdom. Messages
+                poured in — people longing for a taste of authentic Kashmiri
+                heritage.
               </p>
 
               <p className="fade-up">
-                And so, <strong className="text-foreground">The Aapa Foods</strong> was born. 
-                Not as a business, but as a tribute — a way to share Aapa's legacy with 
-                those who cherish tradition as much as we do.
+                And so,{" "}
+                <strong className="text-foreground">The Aapa Foods</strong> was
+                born. Not as a business, but as a tribute — a way to share
+                Aapa's legacy with those who cherish tradition as much as we do.
               </p>
             </div>
 
@@ -101,8 +104,12 @@ const OurStory = () => {
                 />
               </div>
               <div>
-                <p className="font-medium text-foreground">Saadath Mohi ud din</p>
-                <p className="text-sm text-muted-foreground">Founder, The Aapa Foods</p>
+                <p className="font-medium text-foreground">
+                  Saadath Mohi ud din
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  Founder, The Aapa Foods
+                </p>
               </div>
             </div>
           </div>
