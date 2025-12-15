@@ -1,6 +1,9 @@
 import { Product } from '@/contexts/CartContext';
-import Haakh from "../../public/Haakh.jpeg";
-import Mixed from "../../public/Mixed.jpeg";
+// Public assets should be referenced from the root in Vite.
+// Files in `public/` are served at `/` at runtime. Use absolute paths
+// and ensure filename casing matches the filesystem.
+const Haakh = '/Haakh.jpeg';
+const Mixed = '/mixed.jpeg';
 export const products: Product[] = [
   {
     id: 'haakh-anchaar',
